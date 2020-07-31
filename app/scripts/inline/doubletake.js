@@ -30,9 +30,16 @@ var badNoiseRatio = function(wc, fc) {
 var checkLeftPage = function(reflink) {
   console.log("awaiting departure...");
   if (document.location.href.includes("profile")) {
-    setTimeout(function() { checkLeftPage(reflink) }, 2000);
+    setTimeout(function() { checkLeftPage(reflink) }, 5000);
   } else {
     selectProfile();
+  }
+}
+
+var bleepOkCupidBeat = function() {
+  if (document.title.includes("👁")) {
+    chrome.runtime.sendMessage(document.calliope.id, {playAlert: "beep"});
+    setTimeout(function() { bleepOkCupidBeat() }, 15000);
   }
 }
 
@@ -49,7 +56,7 @@ var handlePage = function(wc, fc, reflink, thislink) {
   console.log("handling...");
   if (!thislink) {
     document.title = "👁 " + document.title.replace("👁 ", "");
-    setTimeout(function() { checkLeftPage(reflink) }, 2000);
+    setTimeout(function() { bleepOkCupidBeat(); checkLeftPage(reflink) }, 2000);
   }
   if ( badNoiseRatio(wc, fc) ) {
     setTimeout(function() { swipeLeft(reflink) }, 500);
@@ -57,6 +64,7 @@ var handlePage = function(wc, fc, reflink, thislink) {
     if (thislink) {
       window.location.href = thislink;
     } else {
+      bleepOkCupidBeat();
       checkLeftPage(reflink);
     }
   }

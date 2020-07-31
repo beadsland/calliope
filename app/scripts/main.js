@@ -36,11 +36,21 @@ var injectMods = function(text, list) {
   };
 }
 
+injectJs("document.calliope = {};")
+injectJs("document.calliope.id = \"" + chrome.runtime.id + "\";");
 injectJs("document.flagwords = [];");
-
 
 var flags = ['bother', 'food', 'simple', 'travel', 'countries', 'cities',
              'bougie', 'gender', 'obsess', 'sports'];
 
 flags = flags.map(item => chrome.runtime.getURL("data/" + item + ".txt") );
 injectFlags("", flags);
+
+//var sendExtensionId = function() {
+//  chrome.runtime.sendMessage({calliopeId : chrome.runtime.id,
+//                              greeting: "hello"}, function(response) {
+//    console.log(response);
+//  });
+//}
+
+//setTimeout(sendExtensionId, 1000);

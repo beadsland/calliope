@@ -118,8 +118,7 @@ var grabBumbleEssays = function(content) {
 
 var bleepBumbleBeat = function() {
   if (document.title.includes("👁")) {
-    var calliopeExtensionId = "gjlhdlcfbflbmnfikgceeegbiedlbhbj";
-    chrome.runtime.sendMessage(calliopeExtensionId, {alert: "alert"});
+    chrome.runtime.sendMessage(document.calliope.id, {playAlert: "beep"});
     setTimeout(function() { bleepBumbleBeat() }, 15000);
   }
 }

@@ -12,8 +12,17 @@ var calliopeAlert = new Audio('data/notice.mp3');
 
 chrome.runtime.onMessageExternal.addListener(
   function(request, sender, sendResponse) {
-    if (request.alert) { calliopeAlert.play(); }
+    if (request.playAlert) {
+      calliopeAlert.play();
+      sendResponse({playAlert: "ok"});
+    } else {
+      sendResponse({unknownMessage: request});
+    }
   }
 );
 
-console.log('\'Allo \'Allo! Event Page for Page Action');
+//chrome.runtime.onMessage.addListener(
+//  function(request, sender, sendResponse) {
+//    if (request.playAlert) {
+//      sendResponse({calliopeId: "ok"});
+//  });
