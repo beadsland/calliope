@@ -1,6 +1,6 @@
 'use strict';
 
-console.log('\'Allo \'Allo! Content script on doubletake page');
+console.log('\'Allo \'Allo! Content script for calliope extension');
 
 var injectJs = function(jsScript) {
   var s = document.createElement('script');
