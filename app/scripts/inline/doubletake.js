@@ -62,6 +62,19 @@ var handlePage = function(wc, fc, reflink, thislink) {
   }
 }
 
+var shrinkMedia = function(essays) {
+  for (var essay of essays[0].children) {
+    if (essay.className == "profile-essay") {
+      var head = essay.children[0];
+      var body = essay.children[1];
+      if (head.children[0].innerText == "MEDIA" &&
+          head.children[1].innerText == "Favorite books, movies, shows, music, and food") {
+        body.style = "font-size: 90%; line-height: 90%;";
+      }
+    }
+  }
+}
+
 var parsePage = function(essays, reflink, n) {
   window.scrollTo(0, 680);
 
@@ -73,6 +86,7 @@ var parsePage = function(essays, reflink, n) {
     window.scrollTo(0, 230);
     var more = document.getElementsByClassName("profile-essays-expander");
     if (more.length) { more[0].click() }
+    shrinkMedia(essays)
   }
 
   var linkcoll = document.getElementsByClassName("cardsummary-profile-link");
