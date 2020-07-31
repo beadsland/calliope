@@ -134,8 +134,21 @@ var waitProfile = function() {
   else { setTimeout(function() { parsePage(essays); }, 1000); }
 }
 
+var getKeyDown = function(e) {
+  if (!document.getElementsByClassName("messenger-composer").length) {
+    console.log(e);
+    if (e.key == "ArrowLeft") {
+      document.getElementsByClassName("pass-pill-button")[0].click();
+    }
+    if (e.key == "ArrowRight") {
+      document.getElementsByClassName("like-pill-button")[0].click();
+    }
+  }
+}
+
 var selectProfile = function(reflink) {
   console.log("selecting...");
+  window.onkeydown = getKeyDown;
   if (!window.location.href.includes("profile")) { checkStacks(reflink); }
   else { waitProfile(); }
 }
