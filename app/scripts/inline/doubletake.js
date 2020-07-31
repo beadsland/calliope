@@ -18,11 +18,11 @@ var badNoiseRatio = function(wc, fc) {
   var location = document.getElementsByClassName("cardsummary-location");
   if (location.length) {
     location = location[0].innerText;
-    if (location == "Manhattan, NY") { return (wc-fc < 50 || fc/wc > 0.20) }
-    if (location == "Brooklyn, NY") { return (wc-fc < 100 || fc/wc > 0.15) }
-    if (location == "Philadephia, PA") { return (wc-fc < 150 || fc/wc > 0.125) }
-    if (location == "Conshohocken, PA") { return (wc-fc < 150 || fc/wc > 0.11) }
-    if (location.includes(", NJ")) { return (wc-fc < 150 || fc/wc > 0.10) }
+    if (location == "Manhattan, NY") { return (wc-fc < 50 || fc/wc > 0.15) }
+    if (location == "Brooklyn, NY") { return (wc-fc < 100 || fc/wc > 0.125) }
+    if (location == "Philadephia, PA") { return (wc-fc < 150 || fc/wc > 0.1125) }
+    if (location == "Conshohocken, PA") { return (wc-fc < 150 || fc/wc > 0.10) }
+    if (location.includes(", NJ")) { return (wc-fc < 150 || fc/wc > 0.09) }
   }
   return (wc-fc < 150 || fc/wc > 0.09);
 }
