@@ -24,13 +24,20 @@
     "chrome_style": true
   },
   "web_accessible_resources": ["scripts/inline/*", "data/*"],
+  "externally_connectable": {
+    "matches": [
+      "*://*.bumble.com/*",
+      "*://*.okcupid.com/*"
+    ]
+  },
   "content_scripts": [
     {
       "matches": [
         "*://*.okcupid.com/doubletake",
         "*://*.okcupid.com/home",
         "*://*.okcupid.com/profile",
-        "*://*.okcupid.com/profile/*"
+        "*://*.okcupid.com/profile/*",
+        "*://*.bumble.com/*"
       ],
       "js": [
         "scripts/main.js"
