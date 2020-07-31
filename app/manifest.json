@@ -1,6 +1,6 @@
 {
   "name": "__MSG_appName__",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "manifest_version": 2,
   "description": "__MSG_appDescription__",
   "icons": {
@@ -16,7 +16,6 @@
     ]
   },
   "permissions": [
-    "https://sokcupid.com/doublestake",
     "tabs"
   ],
   "options_ui": {
@@ -51,7 +50,7 @@
       "19": "images/icon-19.png",
       "38": "images/icon-38.png"
     },
-    "default_title": "calliope",
+    "default_title": "Calliope",
     "default_popup": "popup.html"
   }
 }

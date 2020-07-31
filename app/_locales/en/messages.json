@@ -1,10 +1,10 @@
 {
   "appName": {
-    "message": "calliope",
+    "message": "Calliope",
     "description": "The name of the application"
   },
   "appDescription": {
-    "message": "Streamline reading OkCupid profiles.",
+    "message": "Calliope Concierge for OkCupid and Bumble.",
     "description": "The description of the application"
   }
 }
