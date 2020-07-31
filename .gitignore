@@ -1,8 +1,16 @@
 app/data/*.txt
+priv/build/*.js
+
+###
+## Temp files
+###
+
 *.swp
 *.lock
 
-priv/build/*.js
+###
+## Elixir
+###
 
 /_build
 /cover
