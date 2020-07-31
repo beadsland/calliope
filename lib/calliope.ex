@@ -13,6 +13,6 @@ defmodule Calliope do
 
   """
   def hello do
-    :world
+  :console.log(:world)
   end
 end

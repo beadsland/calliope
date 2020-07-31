@@ -1,4 +1,8 @@
 app/data/*.txt
+*.swp
+*.lock
+
+priv/build/*.js
 
 /_build
 /cover
