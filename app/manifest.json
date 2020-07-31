@@ -11,7 +11,7 @@
   "background": {
     "scripts": [
       "libs/polyfill.min.js",
-      "scripts/hot-reload.js",
+      "libs/hot-reload.js",
       "scripts/background.js"
     ]
   },
