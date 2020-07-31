@@ -274,10 +274,11 @@ var checkBumbleReady = function() {
   if (alreadyWordCounts()) {
     setTimeout(function() { checkBumbleReady() }, 10000);
   } else {
-    console.log("loading...");
-    if (document.readyState == "complete" &&
-        document.location.href.includes("bumble.com")) { checkBumbleLogin(); }
-    else { setTimeout(function() { checkBumbleReady() }, 3000); }
+    if (document.location.href.includes("bumble.com")) {
+      console.log("loading bumble...");
+      if (document.readyState == "complete") { checkBumbleLogin(); }
+      else { setTimeout(function() { checkBumbleReady() }, 3000); }
+    }
   }
 }
 
