@@ -63,15 +63,16 @@ var handlePage = function(wc, fc, reflink, thislink) {
 }
 
 var parsePage = function(essays, reflink, n) {
-  window.scrollTo(0, 650);
+  window.scrollTo(0, 680);
 
   var realname = document.getElementsByClassName("cardsummary-realname");
   if (realname.length) {
     document.title = realname[0].innerText + "—" + document.title.replace(/^.*—/, "");
   } else {
     setTimeout(function() { checkEye() }, 2000);
-    window.scrollTo(0, 250);
-    document.getElementsByClassName("profile-essays-expander")[0].click()
+    window.scrollTo(0, 230);
+    var more = document.getElementsByClassName("profile-essays-expander");
+    if (more.length) { more[0].click() }
   }
 
   var linkcoll = document.getElementsByClassName("cardsummary-profile-link");
@@ -110,14 +111,14 @@ var loadStacks = function(stacks, n, reflink) {
 
 var visitStacks = function(stacks, n, reflink) {
   console.log("visiting...");
-  window.scrollTo(0, 650);
+  window.scrollTo(0, 680);
   stacks[n].click();
   setTimeout(function() { loadStacks(stacks, n, reflink); }, 500);
 }
 
 var checkStacks = function(reflink) {
   console.log("checking...");
-  window.scrollTo(0, 650);
+  window.scrollTo(0, 680);
   var stacks = document.getElementsByClassName("stacks-menu-item");
   if (stacks.length) {
     setTimeout(function() { visitStacks(stacks, stacks.length-1, reflink); }, 1000);
@@ -127,7 +128,7 @@ var checkStacks = function(reflink) {
 
 var waitProfile = function() {
   console.log("waiting...");
-  window.scrollTo(0, 650);
+  window.scrollTo(0, 680);
   var essays = getEssays();
   if (!essays.length) { setTimeout(function() { waitProfile() }, 3000); }
   else { setTimeout(function() { parsePage(essays); }, 1000); }
@@ -145,7 +146,7 @@ var checkReady = function() {
   } else {
     if (document.location.href.includes("okcupid.com")) {
       console.log("loading okcupid...");
-      window.scrollTo(0, 650);
+      window.scrollTo(0, 680);
       if (document.readyState == "complete") { selectProfile(); }
       else { setTimeout(function() { checkReady() }, 3000); }
     }
