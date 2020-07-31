@@ -1,6 +1,6 @@
 'use strict';
 
-var toggleBeeline = function() {
+var toggleBumbleBeeline = function() {
   var x = document.getElementById("beeline-display");
   if (x.style.display === "none") {
     x.style.display = "block";
@@ -9,8 +9,8 @@ var toggleBeeline = function() {
   }
 }
 
-var simulateKey = function(keyCode, type, modifiers) {
-	var evtName = (typeof(type) === "string") ? "key" + type : "keydown";	
+var simulateBumbleKey = function(keyCode, type, modifiers) {
+	var evtName = (typeof(type) === "string") ? "key" + type : "keydown";
 	var modifier = (typeof(modifiers) === "object") ? modifier : {};
 
 	var event = document.createEvent("HTMLEvents");
@@ -24,7 +24,7 @@ var simulateKey = function(keyCode, type, modifiers) {
 	document.dispatchEvent(event);
 }
 
-var pickNoiseCap = function(content) {
+var pickBumbleNoiseCap = function(content) {
   var location = content.filter(
     node => node.classList.contains("encounters-story-section--location")
   )[0];
@@ -44,7 +44,7 @@ var pickNoiseCap = function(content) {
     node => node.classList.contains("encounters-story-profile")
   )[0];
 
-  if (detail.children.length == 1) { 
+  if (detail.children.length == 1) {
     detail.appendChild(document.createElement("div"));
   }
   if (detail.children.length == 2) {
@@ -53,12 +53,12 @@ var pickNoiseCap = function(content) {
   if (detail.children.length == 3) {
     detail.children[1].appendChild(townP);
   }
-  
-      
+
+
   if (town.includes(", New York")) { dist = Math.max(0.5, dist-2) / 2; }
   if (town.includes(", New Jersey")) { dist = Math.max(0.5, dist-2) / 3; }
-  if (town.includes(", Pennsylvania")) { dist = Math.abs(dist-85); }    
-    
+  if (town.includes(", Pennsylvania")) { dist = Math.abs(dist-85); }
+
   var cap = 1/dist;
   var words = 50*(1-cap);
 
@@ -76,10 +76,10 @@ var pickNoiseCap = function(content) {
   return [cap, words];
 }
 
-var grabEssays = function(content) {
-  var noiseCap = pickNoiseCap(content)
+var grabBumbleEssays = function(content) {
+  var noiseCap = pickBumbleNoiseCap(content)
   console.log(noiseCap);
-    
+
   var hr = document.createElement("hr");
   hr.style.margin="5px";
 
@@ -107,24 +107,24 @@ var grabEssays = function(content) {
       left.click(left);
     }, 500 + 500*Math.random());
   } else {
-    setTimeout(function() { 
-      document.title = document.title.replace(/(^.*—)/u, "👁 $1"); 
-      bleepBeat();
+    setTimeout(function() {
+      document.title = document.title.replace(/(^.*—)/u, "👁 $1");
+      bleepBumbleBeat();
      }, 1000);
   }
 
   return essays;
 }
 
-var bleepBeat = function() {
+var bleepBumbleBeat = function() {
   if (document.title.includes("👁")) {
     var calliopeExtensionId = "gjlhdlcfbflbmnfikgceeegbiedlbhbj";
     chrome.runtime.sendMessage(calliopeExtensionId, {alert: "alert"});
-    setTimeout(function() { bleepBeat() }, 15000);    
+    setTimeout(function() { bleepBumbleBeat() }, 15000);
   }
 }
 
-var stylePhotos = function(photos) {
+var styleBumblePhotos = function(photos) {
   var div = document.createElement("div");
   div.style.position = "absolute";
   div.style.zIndex = -1;
@@ -144,14 +144,14 @@ var stylePhotos = function(photos) {
   return div;
 }
 
-var grabProfilePhoto = function(node) {
+var grabBumbleProfilePhoto = function(node) {
   if (node.className == "encounters-story-profile-image") {
     return node.children[0];
-  } else { return node }  
+  } else { return node }
 }
 
-var grabPhotos = function(content) {
-  var photos = content.map( node => grabProfilePhoto(node) );
+var grabBumblePhotos = function(content) {
+  var photos = content.map( node => grabBumbleProfilePhoto(node) );
   var photos = photos.filter( node => node.tagName.toUpperCase() == "FIGURE" );
   photos = photos.map( node => [...node.childNodes] ).flat();
   photos = photos.filter( node => node.tagName.toUpperCase() == "PICTURE" );
@@ -160,11 +160,11 @@ var grabPhotos = function(content) {
     if (photos[0].currentSrc == photos[photos.length-1].currentSrc) { photos.pop(); }
   }
 
-  if (photos.length) { return stylePhotos(photos); }
-  else { return grabPhotos(content); }
+  if (photos.length) { return styleBumblePhotos(photos); }
+  else { return grabBumblePhotos(content); }
 }
 
-var buildBeeline = function(content) {
+var buildBumbleBeeline = function(content) {
   console.log("building...");
 
   var div = document.createElement("div");
@@ -176,19 +176,19 @@ var buildBeeline = function(content) {
   div.style.borderStyle = "dashed";
   div.style.padding = "10px";
 
-  var essays = grabEssays(content);
+  var essays = grabBumbleEssays(content);
   essays.forEach(function(item) { div.appendChild(item); });
 
-  var photos = grabPhotos(content);
+  var photos = grabBumblePhotos(content);
   div.appendChild(photos);
 
   var header = document.getElementsByClassName("encounters-story-profile__name");
-  document.title = header[0].innerText + "—" + document.title; 
-    
+  document.title = header[0].innerText + "—" + document.title;
+
   return div;
 }
 
-var hookClick = function(value) {
+var hookBumbleClick = function(value) {
   console.log(value);
   console.log(document.title.replace(/^.*—/u, ""));
   document.title = document.title.replace(/^.*—/u, "");
@@ -196,10 +196,10 @@ var hookClick = function(value) {
   if (user) { user.parentNode.removeChild(user); }
   var togg = document.getElementById("beeline-toggle");
   if (togg) { togg.parentNode.removeChild(togg); }
-  setTimeout(function() { readProfile() }, 500);
+  setTimeout(function() { readBumbleProfile() }, 500);
 }
 
-var buildToggle = function() {
+var buildBumbleToggle = function() {
   var tog = document.createElement("button");
   tog.id = "beeline-toggle";
   tog.style.position = "absolute";
@@ -207,57 +207,57 @@ var buildToggle = function() {
   tog.style.top = "-5px";
   tog.style.backgroundColor = "#00ee00";
   tog.style.margin = "2px 2px";
-  tog.setAttribute("onclick", "toggleBeeline()");
+  tog.setAttribute("onclick", "toggleBumbleBeeline()");
   tog.innerHTML = "<b>Toggle Beeline</b>";
   return tog;
 }
 
-var parseProfile = function(content) {
+var parseBumbleProfile = function(content) {
   console.log("parsing...");
   var user = document.getElementsByClassName("responsive-box")[0];
 
-  var beeline = buildBeeline(content);
+  var beeline = buildBumbleBeeline(content);
   user.parentNode.insertBefore(beeline, user);
-  var toggle = buildToggle();
+  var toggle = buildBumbleToggle();
   user.parentNode.insertBefore(toggle, user);
 
   var controls = document.getElementsByClassName("encounters-controls__actions")[0];
-  controls.addEventListener("click", hookClick);
-  document.addEventListener("keydown", hookClick);
+  controls.addEventListener("click", hookBumbleClick);
+  document.addEventListener("keydown", hookBumbleClick);
 }
 
-var reloadSite = function() {
+var reloadBumbleSite = function() {
   document.location.href = "http://www.okcupid.com/";
 }
 
-var checkEmpty = function() {
+var checkBumbleEmpty = function() {
   console.log("checking if empty stack...");
   var content = document.getElementsByClassName("encounters-user__blocker");
   if (content.length) {
     console.log("preparing to launch alternate site...");
-    setTimeout(function() { reloadSite(); }, 1000 * 60 * 10); 
+    setTimeout(function() { reloadBumbleSite(); }, 1000 * 60 * 10);
   }
-  else { setTimeout(function() { checkReady(); }, 1000); }
-}    
+  else { setTimeout(function() { checkBumbleReady(); }, 1000); }
+}
 
-var readProfile = function() {
+var readBumbleProfile = function() {
   console.log("reading...");
 
   var content = document.getElementsByClassName("encounters-story__content");
   content = [...content];
   content = content.map( node => node.firstChild );
-  
-  if (!content.length) { setTimeout(function() { checkEmpty() }, 200); }
+
+  if (!content.length) { setTimeout(function() { checkBumbleEmpty() }, 200); }
   else {
     var head = content.map( node => [...node.childNodes] ).flat();
     head = content.map( node => node.className );
     head = head.filter( cls => cls == "encounters-story-profile" );
-    if (head.length != 1) { setTimeout(function() { checkReady() }, 200); }
-    else { setTimeout(function() { parseProfile(content); }, 1000); }
+    if (head.length != 1) { setTimeout(function() { checkBumbleReady() }, 200); }
+    else { setTimeout(function() { parseBumbleProfile(content); }, 1000); }
   }
 }
 
-var checkLogin = function() {
+var checkBumbleLogin = function() {
   var buttons = document.getElementsByClassName("button");
   buttons = [...buttons];
   buttons = buttons.filter( button => button.dataset.seoLabel == "sign-in" );
@@ -265,20 +265,20 @@ var checkLogin = function() {
   if (buttons.length) {
     console.log("logging in...");
     buttons[0].click();
-    setTimeout(function() { checkReady() }, 3000);
-  } else { readProfile(); }
+    setTimeout(function() { checkBumbleReady() }, 3000);
+  } else { readBumbleProfile(); }
 }
 
 
-var checkReady = function() {    
+var checkBumbleReady = function() {
   if (alreadyWordCounts()) {
-    setTimeout(function() { checkReady() }, 10000);
+    setTimeout(function() { checkBumbleReady() }, 10000);
   } else {
     console.log("loading...");
-    if (document.readyState == "complete") { checkLogin(); }
-    else { setTimeout(function() { checkReady() }, 3000); }
+    if (document.readyState == "complete" &&
+        document.location.href.includes("bumble.com")) { checkBumbleLogin(); }
+    else { setTimeout(function() { checkBumbleReady() }, 3000); }
   }
 }
 
-checkReady();
-
+checkBumbleReady();

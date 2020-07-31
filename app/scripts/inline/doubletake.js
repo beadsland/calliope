@@ -80,7 +80,8 @@ var checkReady = function() {
     setTimeout(function() { checkReady() }, 10000);
   } else {
     console.log("loading...");
-    if (document.readyState == "complete") { selectProfile(); }
+    if (document.readyState == "complete"  &&
+       document.location.href.includes("okcupid.com")) { selectProfile(); }
     else { setTimeout(function() { checkReady() }, 3000); }
   }
 }
