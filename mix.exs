@@ -15,7 +15,7 @@ defmodule Calliope.MixProject do
       elixir_script: [
           # Entry module. Can also be a list of modules
           input: Calliope,
-          # Output path. Eith cleaer a path to a js file or a directory
+          # Output path. Either a path to a js file or a directory
           output: "_build"
       ]
 
