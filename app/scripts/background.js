@@ -8,7 +8,7 @@ chrome.tabs.onUpdated.addListener(function (tabId) {
   chrome.pageAction.show(tabId);
 });
 
-var calliopeAlert = new Audio('data/notice.mp3');
+var calliopeAlert = new Audio('assets/notice.mp3');
 
 chrome.runtime.onMessageExternal.addListener(
   function(request, sender, sendResponse) {
