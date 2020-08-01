@@ -6,7 +6,6 @@ app/scripts/calliope-bundle.js
 ###
 
 *.swp
-*.lock
 
 ###
 ## Elixir

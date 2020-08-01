@@ -1,0 +1,4 @@
+%{
+  "elixir_script": {:hex, :elixir_script, "0.32.1", "c97e753faf1dd8bc93244fec93d7c88c3a7eef85e2bad7eb3e014ba3f1e06931", [:mix], [{:estree, "~> 2.6", [hex: :estree, repo: "hexpm", optional: false]}], "hexpm"},
+  "estree": {:hex, :estree, "2.7.0", "32cb6ff05c85a93bf6c646b3b184e131f699fc1e7157d2b5be148c17f43ae566", [:mix], [], "hexpm"},
+}
