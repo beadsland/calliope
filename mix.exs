@@ -16,7 +16,7 @@ defmodule Calliope.MixProject do
           # Entry module. Can also be a list of modules
           input: Calliope,
           # Output path. Either a path to a js file or a directory
-          output: "_build"
+          output: "priv/build"
       ]
 
     ]

@@ -1,5 +1,6 @@
 app/data/*.txt
 app/scripts/calliope-bundle.js
+priv/build
 
 ###
 ## Temp files
