@@ -1,5 +1,5 @@
 'use strict';
 
-import {hello} from './_build/Elixir.Calliope.js';
+import calliope from './_build/Elixir.Calliope.js';
 
-hello();
+calliope.hello();
