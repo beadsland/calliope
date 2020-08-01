@@ -39,7 +39,8 @@
         "*://*.bumble.com/*"
       ],
       "js": [
-        "scripts/main.js"
+        "scripts/main.js",
+        "scripts/calliope-bundle.js"
       ],
       "run_at": "document_end",
       "all_frames": false

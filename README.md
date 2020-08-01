@@ -10,3 +10,7 @@ re-create lost functionality from memory.
 
 The plan is now to rewrite the entire extension in ElixirScript, leveraging
 functional programming idioms to manage control flow and injected state.
+
+Requirements:
+ * elixir -- https://elixir-lang.org/install.html
+ * webpack -- had to install this globally (ELIFECYCLE / permission denied)

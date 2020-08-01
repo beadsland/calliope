@@ -1,0 +1,27 @@
+{
+  "name": "calliope",
+  "version": "1.0.0",
+  "description": "Calliope concierge for OkCupid and Bumble.",
+  "main": "foo.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/beadsland/calliope.git"
+  },
+  "author": "Beads Land-Trujillo",
+  "license": "none",
+  "bugs": {
+    "url": "https://github.com/beadsland/calliope/issues"
+  },
+  "homepage": "https://github.com/beadsland/calliope#readme",
+  "devDependencies": {
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  }
+}
