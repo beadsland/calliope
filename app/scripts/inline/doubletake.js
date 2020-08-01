@@ -188,4 +188,4 @@ var checkReady = function() {
   }
 }
 
-checkReady();
+//checkReady();

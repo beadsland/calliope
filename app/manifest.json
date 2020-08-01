@@ -32,10 +32,7 @@
   "content_scripts": [
     {
       "matches": [
-        "*://*.okcupid.com/doubletake",
-        "*://*.okcupid.com/home",
-        "*://*.okcupid.com/profile",
-        "*://*.okcupid.com/profile/*",
+        "*://*.okcupid.com/*",
         "*://*.bumble.com/*"
       ],
       "js": [
