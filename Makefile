@@ -1,14 +1,14 @@
-app/scripts/calliope-bundle.js: node_modules webpack.config.js \
-																						 priv/build/Elixir.Calliope.js \
-	                                           priv/build/ElixirScript.Core.js
+app/scripts/calliope-bundle.js: nodedeps webpack.config.js \
+																			   priv/build/Elixir.Calliope.js \
+	                                       priv/build/ElixirScript.Core.js
 	webpack
 
-node_modules: package.json
+nodedeps:
 	npm install
 
-priv/build/Elixir.Calliope.js: calliope.js $(shell find lib -type f -name *.ex) \
-	                             deps/elixir_script
+priv/build/Elixir.Calliope.js: elixirdeps calliope.js \
+	                             $(shell find lib -type f -name *.ex)
 	mix compile --warnings-as-errors
 
-deps/elixir_script: mix.exs
+elixirdeps:
 	mix deps.get
