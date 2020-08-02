@@ -16,7 +16,7 @@
           # Entry module. Can also be a list of modules
           input: Calliope,
           # Output path. Either a path to a js file or a directory
-          output: "priv/build"
+          output: "priv/elixir_script/build"
       ]
 
     ]

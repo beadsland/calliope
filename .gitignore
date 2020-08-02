@@ -1,6 +1,6 @@
 app/data/*.txt
 app/scripts/calliope-bundle.js
-priv/build
+priv/elixir_script/build
 
 ###
 ## Temp files
