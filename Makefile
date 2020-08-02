@@ -4,7 +4,7 @@ app/scripts/calliope-bundle.js: node_modules webpack.config.js \
 	webpack
 
 node_modules: package.json
-	npm i
+	npm install
 
 priv/build/Elixir.Calliope.js: calliope.js $(shell find lib -type f -name *.ex) \
 	                             deps/elixir_script
