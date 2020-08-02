@@ -1,4 +1,4 @@
-defmodule Calliope.MixProject do
+ defmodule Calliope.MixProject do
   use Mix.Project
 
   def project do
