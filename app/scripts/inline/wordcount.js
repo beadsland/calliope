@@ -33,6 +33,7 @@ var getEssayWords = function(essays) {
       text = text.toLowerCase();
       words = words.concat( text.match(/\w+/g) );
     }
+    document.profilewords = words;
     if (paragraphs.length) { return words };
   }
 }
@@ -79,6 +80,9 @@ var getEssayWordCounts = function(essays) {
       var wc = words.length;
       var fc = words.reduce(function ( count, word ) {
         if (document.flagwords.includes(word)) { count = count + 1; }
+        if (word && word.startsWith("travel")) { count = count + 19; }
+        const yes = ["diy", "crafts"];
+        if (yes.includes(word)) { count = count - 5; }
         return count;
       }, 0);
 

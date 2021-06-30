@@ -19,7 +19,12 @@ function set(key, value) {
   document.calliope[key] = value
 }
 
+function assignInner(elem, html) {
+  elem.innerHTML = inner
+}
+
 export default {
   get: get,
   set: set
+  assignInner: assignInner
 }

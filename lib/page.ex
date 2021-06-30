@@ -4,6 +4,6 @@ defmodule Page do
   """
 
   def getClass(class), do: DOM.getClass(:document, class)
-
+  def getId(id), do: DOM.getId(:document, id)
 
 end

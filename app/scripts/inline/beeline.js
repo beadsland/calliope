@@ -32,11 +32,17 @@ var pickBumbleNoiseCap = function(content) {
   var dist = location.getElementsByClassName("location-widget__distance");
   if (dist.length) {
     dist = Number(dist[0].innerText.match(/([0-9.]+) miles? away/)[1]);
-  } else { dist = 100; }
+  } else { 
+    if (town.includes("Manhattan")) {
+        dist = 1.5
+    } else {
+        dist = 100; 
+    }
+  }
 
   console.log(town, dist);
 
-  console.log(content);
+//  console.log(content);
   var townP = document.createElement("div");
   townP.className = "p-2 font-weight-medium";
   townP.innerText = town;
@@ -54,20 +60,41 @@ var pickBumbleNoiseCap = function(content) {
     detail.children[1].appendChild(townP);
   }
 
-
+  var truedist = dist;
+    
   if (town.includes(", New York")) { dist = Math.max(0.5, dist-2) / 2; }
+  if (town.includes("Staten Island")) { dist = dist * 1.5; }
   if (town.includes(", New Jersey")) { dist = Math.max(0.5, dist-2) / 3; }
-  if (town.includes(", Pennsylvania")) { dist = Math.abs(dist-85); }
+  if (town.includes(", Pennsylvania")) { dist = Math.abs(dist-85) * 1.5; }  
+    
+//  dist = dist / 3;
 
-  var cap = 1/dist;
-  var words = 50*(1-cap);
+  
+  var header = document.getElementsByClassName("encounters-story-profile__age");
+  var age = parseInt( header[0].lastChild.textContent );
+  var myage = Date.now() - new Date(1973, 11, 11);
+  myage = myage / (1000 * 60 * 60 * 24 * 365.25)     
+  
+  var agediff = Math.abs(myage - age) - .5;
+  dist = dist + agediff/4;
+    
+  var cap = 1/(dist-3.75);
+  if (cap < 0) { cap = 1 };
+  console.log("Cap: ", cap);
+  var words = 75*(1-cap);
+  if (cap > .175) { cap = .175; }
+  console.log("Words: ", words);
+
+    //  if (words < 10) { words = 10; }
+//  if (words < 10) { words = Math.min(10, (truedist-4)*2); }
+//  console.log("Words: ", words);
 
   var lies = content.filter(
     node => node.classList.contains("encounters-story-section--question")
   );
   for (var lie of lies) {
     if (lie.children[0].innerText == "Two truths and a lie...") {
-      words = words + 30; // overestimate word count devoted to being coy
+      words = words + 25; // overestimate word count devoted to being coy
       lie.children[1].children[0].style = "font-size: 90%; line-height: 90%";
       console.log(lie);
     }
@@ -76,16 +103,49 @@ var pickBumbleNoiseCap = function(content) {
   return [cap, words];
 }
 
+var checkMatchQueue = function(name) {
+  var spot = document.getElementsByClassName("contact-promo--feature-spotlight");
+    
+  if (name == getProfileName()) {
+    if (spot.length == 0) {
+        chrome.runtime.sendMessage(document.calliope.id, {playAlert: "beep"});
+        setTimeout(function() { checkMatchQueue(name) }, 1000);
+    } else {
+        autoSwipeLeft();   
+    }
+  }
+}
+
+var autoSwipeLeft = function() {
+    var left = document.getElementsByClassName("encounters-action--dislike")[0];
+    setTimeout(function() {
+    console.log("swiping left...");
+    left.click(left);
+    }, 500 + 500*Math.random());    
+}
+
+var autoSwipeRight = function() {
+    var right = document.getElementsByClassName("encounters-action--like")[0];
+    setTimeout(function() {
+        chrome.runtime.sendMessage(document.calliope.id, {playAlert: "beep"});
+        console.log("swiping RIGHT...");
+        right.click(right);
+    }, 500 + 500*Math.random());
+    //      document.title = document.title.replace(/(^.*—)/u, "👁 $1");
+    //      bleepBumbleBeat();
+    //     }, 1000);    
+}
+
+
 var grabBumbleEssays = function(content) {
   var noiseCap = pickBumbleNoiseCap(content)
-  console.log(noiseCap);
 
   var hr = document.createElement("hr");
   hr.style.margin="5px";
 
   var essays = content.filter( node => node.tagName.toUpperCase() != "FIGURE"
                             && node.className != "encounters-story-profile-image");
-  console.log(essays);
+//  console.log(essays);
   essays = essays.map( node => [...node.childNodes, hr] ).flat();
   essays = essays.map( node => node.cloneNode(true) );
   essays.push( document.createElement("p") );
@@ -94,26 +154,29 @@ var grabBumbleEssays = function(content) {
   essays.forEach(node => div.appendChild(node));
   var counts = getEssayWordCounts([div]);
 
-  console.log(counts);
+  console.log("noise cap:", noiseCap);
+  console.log("counts:", counts);
   var wc = counts[0];
   var fc = counts[1];
 
   essays.splice(1, 0, counts[2]);
 
   if ( (wc-fc < noiseCap[1]) || (fc/wc > noiseCap[0]) ) {
-    var left = document.getElementsByClassName("encounters-action--dislike")[0];
-    setTimeout(function() {
-      console.log("swiping left...");
-      left.click(left);
-    }, 500 + 500*Math.random());
+    if ( (wc-fc < noiseCap[1]/2) || (fc/wc > noiseCap[0]*2) ) {
+       autoSwipeLeft();
+    } else {
+       checkMatchQueue(getProfileName());
+    }
   } else {
-    setTimeout(function() {
-      document.title = document.title.replace(/(^.*—)/u, "👁 $1");
-      bleepBumbleBeat();
-     }, 1000);
+    autoSwipeRight();
   }
 
   return essays;
+}
+
+var getProfileName = function() {
+    var header = document.getElementsByClassName("encounters-story-profile__name");
+    return header[0].innerText
 }
 
 var bleepBumbleBeat = function() {
@@ -181,13 +244,17 @@ var buildBumbleBeeline = function(content) {
   var photos = grabBumblePhotos(content);
   div.appendChild(photos);
 
-  var header = document.getElementsByClassName("encounters-story-profile__name");
-  document.title = header[0].innerText + "—" + document.title;
+  document.title = getProfileName() + "—" + document.title;
 
   return div;
 }
 
 var hookBumbleClick = function(value) {
+//  var counts = {};
+//  document.profilewords.forEach(function(x) { counts[x] = (counts[x] || 0)+1; });
+    
+//  alert(counts);
+    
   console.log(value);
   console.log(document.title.replace(/^.*—/u, ""));
   document.title = document.title.replace(/^.*—/u, "");
@@ -226,7 +293,7 @@ var parseBumbleProfile = function(content) {
 }
 
 var reloadBumbleSite = function() {
-  document.location.href = "http://www.okcupid.com/";
+  document.location.href = "http://www.bumble.com/app";
 }
 
 var checkBumbleEmpty = function() {
@@ -239,9 +306,34 @@ var checkBumbleEmpty = function() {
   else { setTimeout(function() { checkBumbleReady(); }, 1000); }
 }
 
+var getKeyDown = function(e) {
+  if (!document.getElementsByClassName("messenger-composer").length) {
+    console.log(e);
+    if (e.key == "ArrowLeft") {
+      var left = document.getElementsByClassName("encounters-action--dislike")[0];
+      console.log("left");
+      //alert("left");
+      left.click(left);
+      e.preventDefault(); // none of this works, it left clicks anyway
+      e.stopPropagation();
+      return false
+    }
+    if (e.key == "ArrowRight") {
+      var right = document.getElementsByClassName("encounters-action--superswipe")[0];
+      console.log("right");
+      alert("right");
+      right.click(right);
+      e.preventDefault(); // whether this works or not is moot as circumvented
+      e.stopPropagation();
+      return false
+    }
+  }
+}
+
 var readBumbleProfile = function() {
   console.log("reading...");
-
+  window.onkeydown = getKeyDown;    
+    
   var content = document.getElementsByClassName("encounters-story__content");
   content = [...content];
   content = content.map( node => node.firstChild );

@@ -179,11 +179,11 @@ var checkReady = function() {
   if (alreadyWordCounts()) {
     setTimeout(function() { checkReady() }, 10000);
   } else {
-    if (document.location.href.includes("okcupid.com")) {
-      console.log("loading okcupid...");
-      window.scrollTo(0, 680);
-      if (document.readyState == "complete") { selectProfile(); }
-      else { setTimeout(function() { checkReady() }, 3000); }
+    if (document.location.href.includes("okcupid.com")) { // okcupid.ex
+      console.log("loading okcupid..."); // okcupid.ex
+      window.scrollTo(0, 680); // okcupid.ex
+      if (document.readyState == "complete") { selectProfile(); } // okcupid.ex
+      else { setTimeout(function() { checkReady() }, 3000); } // okcupid.ex
     }
   }
 }

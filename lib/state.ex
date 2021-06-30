@@ -16,4 +16,7 @@ defmodule State do
 
   @spec set(key :: String.t(), value:: any) :: nil
   def set(_key, _value), do: :stub
+
+  @spec assignInner(elem :: {}, html :: String.t()) :: nil
+  def assignInner(_elem, _html), do: :stub
 end
